@@ -1,18 +1,65 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 
+import SearchBar from './components/SearchBar';
+import SearchResults from './components/SearchResults';
+import Playlist from './components/Playlist';
+
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.handleOnSubmitSearch = this.handleOnSubmitSearch.bind(this);
+    this.searchResultTrackAction = this.searchResultTrackAction.bind(this);
+    this.playlistTrackAction = this.playlistTrackAction.bind(this);
+    this.handleOnChangePlaylistTitle = this.handleOnChangePlaylistTitle.bind(this);
+
+    this.state = {
+      searchResults: [],
+      playlist: [],
+      playlistTitle: 'New playlist',
+    };
+  }
+
+  handleOnSubmitSearch(searchTerm) {
+
+  }
+
+  searchResultTrackAction() {
+
+  }
+
+  playlistTrackAction() {
+
+  }
+
+  handleOnChangePlaylistTitle(event) {
+    this.setState({ playlistTitle: event.target.value });
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <h1>Ja<span class="highlight">mmm</span>ing</h1>
+        <div class="App">
+          <SearchBar onSubmitSearch={this.handleOnSubmitSearch} />
+
+          <div class="App-playlist">
+            <SearchResults
+              searchResults={this.state.searchResults}
+              onTrackAction={this.searchResultTrackAction}
+            />
+
+            <Playlist
+              tracks={this.state.playlist}
+              onTrackAction={this.playlistTrackAction}
+              playlistTitle={this.state.playlistTitle}
+              onChangePlaylistTitle={this.handleOnChangePlaylistTitle}
+            />
+          </div>
+        </div>
       </div>
     );
   }
