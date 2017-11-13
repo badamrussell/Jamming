@@ -6,10 +6,10 @@ import './TrackList.css';
 import Track from '../Track';
 
 const TrackListTemplate = (props) => (
-  <div class="TrackList">
+  <div className="TrackList">
     {
       props.tracks.map((track, index) => (
-        <Track key={index} track={track} onTrackAction={props.onTrackAction} />
+        <Track key={index} track={track} onTrackAction={props.onTrackAction} actionSymbol={props.actionSymbol} />
       ))
     }
   </div>

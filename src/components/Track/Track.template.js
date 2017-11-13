@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import './Track.css';
 
 const TrackTemplate = (props) => (
-  <div class="Track">
-    <div class="Track-information">
+  <div className="Track">
+    <div className="Track-information">
       <h3>{props.trackTitle}</h3>
       <p>{props.artist} | {props.albumTitle}</p>
     </div>
-    <a class="Track-action" onTrackAction={props.onTrackAction}>+</a>
+    <a className="Track-action" onClick={props.onTrackAction}>{props.actionSymbol}</a>
   </div>
 );
 TrackTemplate.propTypes = {
@@ -17,6 +17,7 @@ TrackTemplate.propTypes = {
   artist: PropTypes.string,
   albumTitle: PropTypes.string,
   onTrackAction: PropTypes.func,
+  actionSymbol: PropTypes.string,
 };
 
 export default TrackTemplate;

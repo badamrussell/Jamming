@@ -6,10 +6,12 @@ import './Playlist.css';
 import TrackList from '../TrackList';
 
 const PlaylistTemplate = (props) => (
-  <div class="Playlist">
+  <div className="Playlist">
     <input value={props.playlistTitle} onChange={props.onChangePlaylistTitle} />
 
-    <TrackList tracks={props.tracks} onTrackAction={props.onTrackAction} />
+    <TrackList tracks={props.tracks} onTrackAction={props.onTrackAction} actionSymbol="-" />
+
+    <a className="Playlist-save" onClick={props.onSavePlaylist}>SAVE TO SPOTIFY</a>
   </div>
 );
 PlaylistTemplate.propTypes = {

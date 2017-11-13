@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './SearchBar.css';
 
 const SearchBar = (props) => (
-  <div class="SearchBar">
+  <div className="SearchBar">
     <input
       placeholder="Enter A Song Title"
       name="search_term"
