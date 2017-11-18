@@ -14,24 +14,16 @@ class App extends Component {
     super(props);
 
     this.handleOnSubmitSearch = this.handleOnSubmitSearch.bind(this);
-    this.searchResultTrackAction = this.searchResultTrackAction.bind(this);
-    this.playlistTrackAction = this.playlistTrackAction.bind(this);
+    this.addTrackToPlaylist = this.addTrackToPlaylist.bind(this);
+    this.removeTrackFromPlaylist = this.removeTrackFromPlaylist.bind(this);
     this.handleOnChangePlaylistTitle = this.handleOnChangePlaylistTitle.bind(this);
     this.handleOnSavePlaylist = this.handleOnSavePlaylist.bind(this);
-
-    let hashFragment = window.location.hash;
-    hashFragment = hashFragment[0] === '#' ? hashFragment.slice(1, hashFragment.length) : hashFragment;
-    const hashLookup = {};
-    hashFragment.split('&').forEach((v) => {
-      const pair = v.split('=');
-      hashLookup[pair[0]] = pair[1];
-    });
 
     this.state = {
       searchResults: [],
       playlist: [],
       playlistTitle: 'New playlist',
-      token: hashLookup.access_token || '',
+      token: spotifyApi.getAccessTokenFromUrl(),
     };
   }
 
@@ -47,10 +39,10 @@ class App extends Component {
     }
   }
 
-  searchResultTrackAction(track) {
-    const existsInPlaylist = this.state.playlist.findIndex(t => t.id === track.id) > -1;
+  addTrackToPlaylist(track) {
+    const trackAlreadyInPlaylist = this.state.playlist.findIndex(t => t.id === track.id) > -1;
 
-    if (existsInPlaylist) {
+    if (trackAlreadyInPlaylist) {
       return;
     }
 
@@ -59,7 +51,7 @@ class App extends Component {
     this.setState({ playlist });
   }
 
-  playlistTrackAction(track) {
+  removeTrackFromPlaylist(track) {
     const playlist = this.state.playlist.filter(t => t.id !== track.id);
     this.setState({ playlist });
   }
@@ -75,7 +67,7 @@ class App extends Component {
           playlist: [],
           playlistTitle: 'New playlist',
         });
-      });
+      }).catch(err => console.log(err));
   }
 
   render() {
@@ -88,12 +80,12 @@ class App extends Component {
           <div className="App-playlist">
             <SearchResults
               searchResults={this.state.searchResults}
-              onTrackAction={this.searchResultTrackAction}
+              onTrackAction={this.addTrackToPlaylist}
             />
 
             <Playlist
               tracks={this.state.playlist}
-              onTrackAction={this.playlistTrackAction}
+              onTrackAction={this.removeTrackFromPlaylist}
               playlistTitle={this.state.playlistTitle}
               onChangePlaylistTitle={this.handleOnChangePlaylistTitle}
               onSavePlaylist={this.handleOnSavePlaylist}

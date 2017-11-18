@@ -84,10 +84,23 @@ function savePlaylist(token, playlistName, playlistTracks) {
   });
 }
 
+function getAccessTokenFromUrl() {
+  let hashFragment = window.location.hash;
+  hashFragment = hashFragment[0] === '#' ? hashFragment.slice(1, hashFragment.length) : hashFragment;
+  const hashLookup = {};
+  hashFragment.split('&').forEach((v) => {
+    const pair = v.split('=');
+    hashLookup[pair[0]] = pair[1];
+  });
+
+  return hashLookup.access_token || '';
+}
+
 const spotifyApi = {
   search,
   authenticate,
   savePlaylist,
+  getAccessTokenFromUrl,
 };
 
 export default spotifyApi;
